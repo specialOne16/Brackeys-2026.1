@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0fjslxysj5s"]
+
+[ext_resource type="Script" uid="uid://dqujhmx7i4h23" path="res://entities/halberd/halberd.gd" id="1_mcq5n"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g0cm1"]
+top_radius = 0.02
+bottom_radius = 0.0
+height = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mcq5n"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_kpfsl"]
+size = Vector3(0.25, 0.2, 0.05)
+
+[node name="Halberd" type="Node3D"]
+script = ExtResource("1_mcq5n")
+
+[node name="Model" type="Node3D" parent="."]
+transform = Transform3D(1.9106853e-15, 4.371139e-08, -0.99999994, 0.99999994, -4.371139e-08, 0, -4.3711385e-08, -1, -4.3711385e-08, 0, 0, 0)
+
+[node name="Spike" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+mesh = SubResource("CylinderMesh_g0cm1")
+skeleton = NodePath("../..")
+
+[node name="Pole" type="MeshInstance3D" parent="Model"]
+mesh = SubResource("CylinderMesh_mcq5n")
+skeleton = NodePath("../..")
+
+[node name="Blade" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+mesh = SubResource("BoxMesh_kpfsl")
+skeleton = NodePath("../..")

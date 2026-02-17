@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://db8hg42bvgr2"]
+
+[ext_resource type="Script" uid="uid://dyv0wih2i5g1h" path="res://gameplay/gameplay.gd" id="1_nyvx4"]
+[ext_resource type="PackedScene" uid="uid://brvi2mn4roeku" path="res://entities/player/player.tscn" id="2_ueusv"]
+[ext_resource type="PackedScene" uid="uid://d0fjslxysj5s" path="res://entities/halberd/halberd.tscn" id="3_ktb3l"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nyvx4"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_41n4r"]
+sky_material = SubResource("ProceduralSkyMaterial_nyvx4")
+
+[sub_resource type="Environment" id="Environment_ueusv"]
+background_mode = 2
+sky = SubResource("Sky_41n4r")
+tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_41n4r"]
+
+[node name="Gameplay" type="Node3D"]
+script = ExtResource("1_nyvx4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ueusv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." node_paths=PackedStringArray("halberd") instance=ExtResource("2_ueusv")]
+halberd = NodePath("../Halberd")
+
+[node name="Halberd" parent="." instance=ExtResource("3_ktb3l")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.4982)
+mesh = SubResource("BoxMesh_41n4r")
