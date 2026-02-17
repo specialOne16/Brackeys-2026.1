@@ -1,10 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0fjslxysj5s"]
+[gd_scene load_steps=10 format=3 uid="uid://d0fjslxysj5s"]
 
 [ext_resource type="Script" uid="uid://dqujhmx7i4h23" path="res://entities/halberd/halberd.gd" id="1_mcq5n"]
+[ext_resource type="Script" uid="uid://ct3rtlb6h3lf0" path="res://entities/halberd/halberd_part.gd" id="2_kpfsl"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_g0cm1"]
-top_radius = 0.02
-bottom_radius = 0.0
+top_radius = 0.0
+bottom_radius = 0.02
 height = 0.2
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_mcq5n"]
@@ -15,22 +16,71 @@ height = 1.5
 [sub_resource type="BoxMesh" id="BoxMesh_kpfsl"]
 size = Vector3(0.25, 0.2, 0.05)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_mcq5n"]
+radius = 0.01
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kpfsl"]
+radius = 0.05
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7fdll"]
+size = Vector3(0.05, 0.05, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qfqfw"]
+size = Vector3(0.05, 0.05, 0.2)
+
 [node name="Halberd" type="Node3D"]
 script = ExtResource("1_mcq5n")
 
-[node name="Model" type="Node3D" parent="."]
-transform = Transform3D(1.9106853e-15, 4.371139e-08, -0.99999994, 0.99999994, -4.371139e-08, 0, -4.3711385e-08, -1, -4.3711385e-08, 0, 0, 0)
-
-[node name="Spike" type="MeshInstance3D" parent="Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+[node name="Spike" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.910685e-15, 4.371139e-08, -0.9999994, 0.9999994, -4.371139e-08, -1.722333e-21, -4.3711385e-08, -1, -4.3711385e-08, -3.4969048e-08, 3.4969048e-08, -0.9501223)
 mesh = SubResource("CylinderMesh_g0cm1")
-skeleton = NodePath("../..")
 
-[node name="Pole" type="MeshInstance3D" parent="Model"]
+[node name="Pole" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.910685e-15, 4.371139e-08, -0.99999976, 0.99999976, -4.371139e-08, -5.2234633e-22, -4.3711385e-08, -1, -4.3711385e-08, -1.7763568e-15, 1.7763568e-15, 0.1)
 mesh = SubResource("CylinderMesh_mcq5n")
-skeleton = NodePath("../..")
 
-[node name="Blade" type="MeshInstance3D" parent="Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+[node name="Blade" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.910685e-15, 4.371139e-08, -0.9999997, 0.9999997, -4.371139e-08, -6.7764035e-22, -4.3711385e-08, -1, -4.3711385e-08, 3.715468e-08, -3.715468e-08, -0.75000006)
 mesh = SubResource("BoxMesh_kpfsl")
-skeleton = NodePath("../..")
+
+[node name="SpikePoint" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_kpfsl")
+part_name = "SpikePoint"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpikePoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0500001)
+shape = SubResource("SphereShape3D_mcq5n")
+debug_color = Color(0.9490196, 0, 0.57254905, 1)
+
+[node name="SpikeOrigin" type="Area3D" parent="."]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("2_kpfsl")
+part_name = "SpikeOrigin"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpikeOrigin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.85)
+shape = SubResource("SphereShape3D_kpfsl")
+
+[node name="BladePoint" type="Area3D" parent="."]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("2_kpfsl")
+part_name = "BladePoint"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BladePoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.099999994, -0.75000006)
+shape = SubResource("BoxShape3D_7fdll")
+debug_color = Color(0.9490196, 0, 0.57254905, 1)
+
+[node name="BladeOrigin" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 0
+script = ExtResource("2_kpfsl")
+part_name = "BladeOrigin"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BladeOrigin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75)
+shape = SubResource("BoxShape3D_qfqfw")

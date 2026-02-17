@@ -14,6 +14,7 @@ height = 0.05
 script = ExtResource("1_symyc")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
+current = true
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
 current = true
@@ -31,3 +32,6 @@ pose = &"grip"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftXRController3D"]
 mesh = SubResource("SphereMesh_41n4r")
+
+[connection signal="button_pressed" from="XROrigin3D/RightXRController3D" to="." method="_on_right_xr_controller_3d_button_pressed"]
+[connection signal="button_pressed" from="XROrigin3D/LeftXRController3D" to="." method="_on_left_xr_controller_3d_button_pressed"]

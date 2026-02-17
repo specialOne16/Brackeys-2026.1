@@ -15,6 +15,13 @@ run/main_scene="uid://db8hg42bvgr2"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[layer_names]
+
+3d_physics/layer_5="SpikePoint"
+3d_physics/layer_6="SpikeOrigin"
+3d_physics/layer_7="BladePoint"
+3d_physics/layer_8="BladeOrigin"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

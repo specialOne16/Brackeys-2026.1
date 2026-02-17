@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://db8hg42bvgr2"]
+[gd_scene load_steps=9 format=3 uid="uid://db8hg42bvgr2"]
 
 [ext_resource type="Script" uid="uid://dyv0wih2i5g1h" path="res://gameplay/gameplay.gd" id="1_nyvx4"]
 [ext_resource type="PackedScene" uid="uid://brvi2mn4roeku" path="res://entities/player/player.tscn" id="2_ueusv"]
 [ext_resource type="PackedScene" uid="uid://d0fjslxysj5s" path="res://entities/halberd/halberd.tscn" id="3_ktb3l"]
+[ext_resource type="PackedScene" uid="uid://ca5t2d35dmbkh" path="res://entities/note/note.tscn" id="4_ktb3l"]
+[ext_resource type="Script" uid="uid://cn7tprijdegc1" path="res://entities/note/node_spawner.gd" id="5_gvicd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nyvx4"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -15,8 +17,6 @@ sky_material = SubResource("ProceduralSkyMaterial_nyvx4")
 background_mode = 2
 sky = SubResource("Sky_41n4r")
 tonemap_mode = 2
-
-[sub_resource type="BoxMesh" id="BoxMesh_41n4r"]
 
 [node name="Gameplay" type="Node3D"]
 script = ExtResource("1_nyvx4")
@@ -33,6 +33,15 @@ halberd = NodePath("../Halberd")
 
 [node name="Halberd" parent="." instance=ExtResource("3_ktb3l")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.4982)
-mesh = SubResource("BoxMesh_41n4r")
+[node name="Note" parent="." instance=ExtResource("4_ktb3l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="Note2" parent="." instance=ExtResource("4_ktb3l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
+
+[node name="NodeSpawner" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+script = ExtResource("5_gvicd")
+height = 1.0
+metadata/_custom_type_script = "uid://cn7tprijdegc1"
