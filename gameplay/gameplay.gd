@@ -19,15 +19,12 @@ func _ready() -> void:
 	# In the future, this should come from our song selection menu 
 	var beatmap = BeatmapLoader.load_beatmap("res://beatmaps/guardian_normal.json")
 	
-	if beatmap:
-		print("Loaded beatmap: ", beatmap.full_name)
-		node_spawner.current_beatmap = beatmap
-		
-		if beatmap.audio_stream:
-			audio_player.stream = beatmap.audio_stream
-			audio_player.play()
-	else:
-		push_error("Failed to load beatmap!")
+	node_spawner.beatmap_notes = beatmap.notes
+	
+	if beatmap.audio_stream:
+		audio_player.stream = beatmap.audio_stream
+		audio_player.play()
+
 
 func _process(delta: float) -> void:
 	if audio_player.playing:

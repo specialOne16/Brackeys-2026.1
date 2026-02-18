@@ -9,7 +9,7 @@ const PIERCE = preload("uid://bu1dyfn1nctti")
 
 const NOTE = preload("uid://ca5t2d35dmbkh")
 
-var current_beatmap: BeatmapData
+var beatmap_notes: Array[Dictionary] = []
 @export var note_direction: Vector3 = Vector3.BACK
 @export var song_timestamp: float = 0
 @export var height: float = 0
@@ -17,12 +17,11 @@ var current_beatmap: BeatmapData
 var _current_notes_index = 0
 
 func _process(_delta: float) -> void:
-	if not current_beatmap: return
+	if beatmap_notes == []:
+		return
 	
-	var notes = current_beatmap.notes
-	
-	while _current_notes_index < notes.size() and song_timestamp >= notes[_current_notes_index].time:
-		_spawn_note(notes[_current_notes_index])
+	while _current_notes_index < beatmap_notes.size() and song_timestamp >= beatmap_notes[_current_notes_index].time:
+		_spawn_note(beatmap_notes[_current_notes_index])
 		_current_notes_index += 1
 
 func _spawn_note(data: Dictionary):
