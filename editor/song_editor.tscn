@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://c68nq55dqc040"]
+
+[ext_resource type="Script" uid="uid://bjaitim5kmxfb" path="res://editor/song_editor.gd" id="1_bd5ru"]
+[ext_resource type="AudioStream" uid="uid://ba3yo7pk8ymbv" path="res://musics/Guardian of the Alps.wav" id="2_u24ke"]
+
+[node name="SongEditor" type="Control" unique_id=16616448 node_paths=PackedStringArray("audio_player", "timeline_slider", "time_label", "grid_container", "type_selector", "bpm_input", "snap_checkbox", "beatmap_name_input")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bd5ru")
+audio_player = NodePath("AudioStreamPlayer")
+timeline_slider = NodePath("VBoxContainer/HSlider")
+time_label = NodePath("VBoxContainer/TypeSelector/TimeLabel")
+grid_container = NodePath("VBoxContainer/CenterContainer/NoteContainer")
+type_selector = NodePath("VBoxContainer/TypeSelector/TypeSelector")
+bpm_input = NodePath("VBoxContainer/HBoxContainer/SnapCheck")
+snap_checkbox = NodePath("VBoxContainer/HBoxContainer/CheckBox")
+beatmap_name_input = NodePath("VBoxContainer/HBoxContainer/BeatMapNameInput")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=516507704]
+stream = ExtResource("2_u24ke")
+
+[node name="Panel" type="Panel" parent="." unique_id=959226372]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=990812757]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0013657, 0.9889396)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=2005698209]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=250157257]
+layout_mode = 2
+text = "Save"
+
+[node name="LoadButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=117500006]
+layout_mode = 2
+text = "Load"
+
+[node name="BeatMapNameInput" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=744725055]
+layout_mode = 2
+text = "guardian_normal"
+placeholder_text = "Beatmap Name"
+expand_to_text_length = true
+
+[node name="SnapCheck" type="SpinBox" parent="VBoxContainer/HBoxContainer" unique_id=1384400888]
+layout_mode = 2
+max_value = 300.0
+value = 120.0
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer" unique_id=674727956]
+layout_mode = 2
+button_pressed = true
+text = "Snap To Grid"
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer" unique_id=193067354]
+layout_mode = 2
+
+[node name="NoteContainer" type="GridContainer" parent="VBoxContainer/CenterContainer" unique_id=1782467195]
+layout_mode = 2
+
+[node name="TypeSelector" type="HBoxContainer" parent="VBoxContainer" unique_id=1174129494]
+layout_mode = 2
+
+[node name="TypeSelector" type="OptionButton" parent="VBoxContainer/TypeSelector" unique_id=228732947]
+layout_mode = 2
+
+[node name="TimeLabel" type="Label" parent="VBoxContainer/TypeSelector" unique_id=1674750873]
+layout_mode = 2
+text = "00:00:00"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer" unique_id=317580719]
+layout_mode = 2
+step = 0.01
+
+[node name="PlayButton" type="Button" parent="." unique_id=1843990967]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 148.0
+offset_right = 146.0
+offset_bottom = 179.0
+text = "Play/Pause"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
