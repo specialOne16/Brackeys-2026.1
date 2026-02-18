@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bjaitim5kmxfb" path="res://editor/song_editor.gd" id="1_bd5ru"]
 [ext_resource type="AudioStream" uid="uid://ba3yo7pk8ymbv" path="res://musics/Guardian of the Alps.wav" id="2_u24ke"]
+[ext_resource type="PackedScene" path="res://editor/generator_popup.tscn" id="3_genpop"]
 
-[node name="SongEditor" type="Control" unique_id=16616448 node_paths=PackedStringArray("audio_player", "timeline_slider", "time_label", "grid_container", "type_selector", "bpm_input", "snap_checkbox", "beatmap_name_input")]
+[node name="SongEditor" type="Control" unique_id=1781666654 node_paths=PackedStringArray("audio_player", "timeline_slider", "time_label", "play_button", "prev_note_button", "next_note_button", "grid_container", "type_selector", "snap_checkbox", "bpm_input", "grid_rows_input", "grid_cols_input", "filename_input", "title_input", "author_input", "difficulty_input", "audio_path_input", "creator_input", "cover_path_input", "env_input", "preview_start_input", "preview_end_input", "file_dialog", "generator_popup", "generate_button", "clear_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,18 +13,36 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bd5ru")
 audio_player = NodePath("AudioStreamPlayer")
-timeline_slider = NodePath("VBoxContainer/HSlider")
-time_label = NodePath("VBoxContainer/TypeSelector/TimeLabel")
-grid_container = NodePath("VBoxContainer/CenterContainer/NoteContainer")
-type_selector = NodePath("VBoxContainer/TypeSelector/TypeSelector")
-bpm_input = NodePath("VBoxContainer/HBoxContainer/SnapCheck")
-snap_checkbox = NodePath("VBoxContainer/HBoxContainer/CheckBox")
-beatmap_name_input = NodePath("VBoxContainer/HBoxContainer/BeatMapNameInput")
+timeline_slider = NodePath("MainLayout/TimelineArea/HSlider")
+time_label = NodePath("MainLayout/TopBar/PlaybackInfo/TimeLabel")
+play_button = NodePath("MainLayout/TimelineArea/TransportControls/PlayButton")
+prev_note_button = NodePath("MainLayout/TimelineArea/TransportControls/PrevNoteButton")
+next_note_button = NodePath("MainLayout/TimelineArea/TransportControls/NextNoteButton")
+grid_container = NodePath("MainLayout/CenterArea/NoteContainer")
+type_selector = NodePath("MainLayout/TimelineArea/HBoxContainer/TypeSelector")
+snap_checkbox = NodePath("MainLayout/TopBar/GridSettings/CheckBox")
+bpm_input = NodePath("MainLayout/MetaPanel/VBox/StatsRow/BPMInput")
+grid_rows_input = NodePath("MainLayout/TopBar/GridSettings/RowInput")
+grid_cols_input = NodePath("MainLayout/TopBar/GridSettings/ColInput")
+filename_input = NodePath("MainLayout/TopBar/FileInfo/FilenameInput")
+title_input = NodePath("MainLayout/MetaPanel/VBox/InfoRow/TitleInput")
+author_input = NodePath("MainLayout/MetaPanel/VBox/InfoRow/AuthorInput")
+difficulty_input = NodePath("MainLayout/MetaPanel/VBox/InfoRow/DiffOption")
+audio_path_input = NodePath("MainLayout/MetaPanel/VBox/FileRow/AudioPathInput")
+creator_input = NodePath("MainLayout/MetaPanel/VBox/InfoRow/CreatorInput")
+cover_path_input = NodePath("MainLayout/MetaPanel/VBox/FileRow/CoverPathInput")
+env_input = NodePath("MainLayout/MetaPanel/VBox/InfoRow/EnvInput")
+preview_start_input = NodePath("MainLayout/MetaPanel/VBox/StatsRow/PrevStartInput")
+preview_end_input = NodePath("MainLayout/MetaPanel/VBox/StatsRow/PrevEndInput")
+file_dialog = NodePath("FileDialog")
+generator_popup = NodePath("GeneratorPopup")
+generate_button = NodePath("MainLayout/TopBar/FileInfo/GenerateButton")
+clear_button = NodePath("MainLayout/TopBar/FileInfo/ClearButton")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=516507704]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1562756325]
 stream = ExtResource("2_u24ke")
 
-[node name="Panel" type="Panel" parent="." unique_id=959226372]
+[node name="Panel" type="Panel" parent="." unique_id=394664741]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,74 +50,257 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=990812757]
+[node name="MainLayout" type="VBoxContainer" parent="." unique_id=1276234597]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 50.0
-offset_top = 50.0
-offset_right = -50.0
-offset_bottom = -50.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.0013657, 0.9889396)
+theme_override_constants/separation = 15
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=2005698209]
+[node name="TopBar" type="HBoxContainer" parent="MainLayout" unique_id=26700135]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="FileInfo" type="HBoxContainer" parent="MainLayout/TopBar" unique_id=2005967990]
 layout_mode = 2
 
-[node name="SaveButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=250157257]
+[node name="SaveButton" type="Button" parent="MainLayout/TopBar/FileInfo" unique_id=574786150]
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-text = "Save"
+theme_override_colors/font_color = Color(0.490196, 1, 0.490196, 1)
+text = "Save JSON"
 
-[node name="LoadButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=117500006]
+[node name="LoadButton" type="Button" parent="MainLayout/TopBar/FileInfo" unique_id=1788334245]
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-text = "Load"
+theme_override_colors/font_color = Color(0.45098, 0.788235, 1, 1)
+text = "Load JSON"
 
-[node name="BeatMapNameInput" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=744725055]
+[node name="GenerateButton" type="Button" parent="MainLayout/TopBar/FileInfo" unique_id=1686963855]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.909804, 0.462745, 1)
+text = "Auto Generator"
+
+[node name="ClearButton" type="Button" parent="MainLayout/TopBar/FileInfo" unique_id=291018982]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.47, 0.42, 1)
+text = "Clear All"
+
+[node name="FilenameInput" type="LineEdit" parent="MainLayout/TopBar/FileInfo" unique_id=1415547372]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "guardian_normal"
-placeholder_text = "Beatmap Name"
-expand_to_text_length = true
+placeholder_text = "Filename (no .json)"
 
-[node name="SnapCheck" type="SpinBox" parent="VBoxContainer/HBoxContainer" unique_id=1384400888]
+[node name="VSeparator" type="VSeparator" parent="MainLayout/TopBar" unique_id=1315337553]
 layout_mode = 2
-max_value = 300.0
-value = 120.0
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer" unique_id=674727956]
+[node name="GridSettings" type="HBoxContainer" parent="MainLayout/TopBar" unique_id=47450842]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="MainLayout/TopBar/GridSettings" unique_id=1186170274]
 layout_mode = 2
 button_pressed = true
-text = "Snap To Grid"
+text = "Snap to Beat"
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer" unique_id=193067354]
+[node name="VSeparator2" type="VSeparator" parent="MainLayout/TopBar/GridSettings" unique_id=239453616]
 layout_mode = 2
 
-[node name="NoteContainer" type="GridContainer" parent="VBoxContainer/CenterContainer" unique_id=1782467195]
+[node name="Label2" type="Label" parent="MainLayout/TopBar/GridSettings" unique_id=1263306626]
 layout_mode = 2
+text = "Grid Size:"
 
-[node name="TypeSelector" type="HBoxContainer" parent="VBoxContainer" unique_id=1174129494]
+[node name="ColInput" type="SpinBox" parent="MainLayout/TopBar/GridSettings" unique_id=1762827843]
 layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 4.0
+suffix = "cols"
 
-[node name="TypeSelector" type="OptionButton" parent="VBoxContainer/TypeSelector" unique_id=228732947]
+[node name="Label3" type="Label" parent="MainLayout/TopBar/GridSettings" unique_id=1949128140]
 layout_mode = 2
+text = "x"
 
-[node name="TimeLabel" type="Label" parent="VBoxContainer/TypeSelector" unique_id=1674750873]
+[node name="RowInput" type="SpinBox" parent="MainLayout/TopBar/GridSettings" unique_id=1012289300]
 layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 3.0
+suffix = "rows"
+
+[node name="PlaybackInfo" type="HBoxContainer" parent="MainLayout/TopBar" unique_id=243455587]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="TimeLabel" type="Label" parent="MainLayout/TopBar/PlaybackInfo" unique_id=741264148]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "00:00:00"
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer" unique_id=317580719]
+[node name="MetaPanel" type="PanelContainer" parent="MainLayout" unique_id=543599137]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="MainLayout/MetaPanel" unique_id=1538789128]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MainLayout/MetaPanel/VBox" unique_id=666146825]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 14
+text = "Song Metadata"
+
+[node name="InfoRow" type="HBoxContainer" parent="MainLayout/MetaPanel/VBox" unique_id=1893383203]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="TitleInput" type="LineEdit" parent="MainLayout/MetaPanel/VBox/InfoRow" unique_id=1854586131]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+placeholder_text = "Song Title"
+
+[node name="AuthorInput" type="LineEdit" parent="MainLayout/MetaPanel/VBox/InfoRow" unique_id=1286613980]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+placeholder_text = "Artist Name"
+
+[node name="CreatorInput" type="LineEdit" parent="MainLayout/MetaPanel/VBox/InfoRow" unique_id=1085292635]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+placeholder_text = "Mapper Name"
+
+[node name="DiffOption" type="OptionButton" parent="MainLayout/MetaPanel/VBox/InfoRow" unique_id=962018126]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+
+[node name="EnvInput" type="LineEdit" parent="MainLayout/MetaPanel/VBox/InfoRow" unique_id=2100771488]
+layout_mode = 2
+text = "default"
+placeholder_text = "Env ID"
+
+[node name="StatsRow" type="HBoxContainer" parent="MainLayout/MetaPanel/VBox" unique_id=277157562]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="BPMInput" type="SpinBox" parent="MainLayout/MetaPanel/VBox/StatsRow" unique_id=1001143777]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 500.0
+value = 120.0
+prefix = "BPM:"
+
+[node name="PrevStartInput" type="SpinBox" parent="MainLayout/MetaPanel/VBox/StatsRow" unique_id=102785024]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.1
+prefix = "Preview Start:"
+suffix = "s"
+
+[node name="PrevEndInput" type="SpinBox" parent="MainLayout/MetaPanel/VBox/StatsRow" unique_id=2053659929]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.1
+prefix = "End:"
+suffix = "s"
+
+[node name="HSeparator" type="HSeparator" parent="MainLayout/MetaPanel/VBox" unique_id=1738498688]
+layout_mode = 2
+
+[node name="FileRow" type="GridContainer" parent="MainLayout/MetaPanel/VBox" unique_id=1867816280]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+columns = 3
+
+[node name="Label" type="Label" parent="MainLayout/MetaPanel/VBox/FileRow" unique_id=285832252]
+layout_mode = 2
+text = "Audio File:"
+
+[node name="AudioPathInput" type="LineEdit" parent="MainLayout/MetaPanel/VBox/FileRow" unique_id=722801631]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Path to .wav / .ogg"
+
+[node name="BrowseAudio" type="Button" parent="MainLayout/MetaPanel/VBox/FileRow" unique_id=965130881]
+layout_mode = 2
+text = "Browse..."
+
+[node name="Label2" type="Label" parent="MainLayout/MetaPanel/VBox/FileRow" unique_id=1325321223]
+layout_mode = 2
+text = "Cover Image:"
+
+[node name="CoverPathInput" type="LineEdit" parent="MainLayout/MetaPanel/VBox/FileRow" unique_id=142886482]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Path to .png / .jpg"
+
+[node name="BrowseCover" type="Button" parent="MainLayout/MetaPanel/VBox/FileRow" unique_id=303721537]
+layout_mode = 2
+text = "Browse..."
+
+[node name="CenterArea" type="CenterContainer" parent="MainLayout" unique_id=1155835560]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NoteContainer" type="GridContainer" parent="MainLayout/CenterArea" unique_id=183735647]
+layout_mode = 2
+columns = 4
+
+[node name="TimelineArea" type="VBoxContainer" parent="MainLayout" unique_id=1167976980]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainLayout/TimelineArea" unique_id=286947669]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainLayout/TimelineArea/HBoxContainer" unique_id=1476437009]
+layout_mode = 2
+text = "Note Type: "
+
+[node name="TypeSelector" type="OptionButton" parent="MainLayout/TimelineArea/HBoxContainer" unique_id=398570086]
+layout_mode = 2
+
+[node name="HSlider" type="HSlider" parent="MainLayout/TimelineArea" unique_id=763154118]
 layout_mode = 2
 step = 0.01
 
-[node name="PlayButton" type="Button" parent="." unique_id=1843990967]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 148.0
-offset_right = 146.0
-offset_bottom = 179.0
-text = "Play/Pause"
+[node name="TransportControls" type="HBoxContainer" parent="MainLayout/TimelineArea" unique_id=1962964032]
+layout_mode = 2
+alignment = 1
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
-[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[node name="PrevNoteButton" type="Button" parent="MainLayout/TimelineArea/TransportControls" unique_id=125054153]
+layout_mode = 2
+text = "|< Prev Note"
+
+[node name="PlayButton" type="Button" parent="MainLayout/TimelineArea/TransportControls" unique_id=1705489940]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Play / Pause"
+
+[node name="NextNoteButton" type="Button" parent="MainLayout/TimelineArea/TransportControls" unique_id=1032951614]
+layout_mode = 2
+text = "Next Note >|"
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1981807728]
+title = "Open File"
+initial_position = 2
+size = Vector2i(700, 500)
+access = 2
+filters = PackedStringArray("*.json ; Beatmap Files", "*.wav, *.ogg, *.mp3 ; Audio Files", "*.png, *.jpg, *.jpeg ; Images")
+
+[node name="GeneratorPopup" parent="." unique_id=1838870190 instance=ExtResource("3_genpop")]
+
+[connection signal="pressed" from="MainLayout/TopBar/FileInfo/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="MainLayout/TopBar/FileInfo/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="MainLayout/TopBar/FileInfo/GenerateButton" to="." method="_on_generate_button_pressed"]
+[connection signal="pressed" from="MainLayout/MetaPanel/VBox/FileRow/BrowseAudio" to="." method="_on_browse_audio_pressed"]
+[connection signal="pressed" from="MainLayout/MetaPanel/VBox/FileRow/BrowseCover" to="." method="_on_browse_cover_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
