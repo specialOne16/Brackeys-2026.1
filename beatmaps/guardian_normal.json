@@ -1,0 +1,18 @@
+{
+  "_meta": {
+	"version": "1.0"
+  },
+  "song_info": {
+	"full_name": "Guardian of the Alps",
+	"technical_name": "guardian_alps",
+	"author": "Unknown",
+	"difficulty": "Normal",
+	"audio_path": "res://musics/Guardian of the Alps.wav"
+  },
+  "notes": [
+	{ "time": 1.0, "lane_x": 0.0, "height_y": 0.0, "type": "any" },
+	{ "time": 2.0, "lane_x": 0.0, "height_y": 1.0, "type": "any" },
+	{ "time": 3.0, "lane_x": 0.0, "height_y": 2.0, "type": "cut" },
+	{ "time": 4.0, "lane_x": 1.0, "height_y": 0.0, "type": "bump" }
+  ]
+}
