@@ -1,6 +1,5 @@
 extends Control
 
-# -- UI References --
 @export_group("Playback")
 @export var audio_player: AudioStreamPlayer
 @export var timeline_slider: HSlider
@@ -36,37 +35,31 @@ extends Control
 @export var generate_button: Button
 @export var clear_button: Button
 
-# -- Data --
 var current_notes: Array[Dictionary] = []
 var song_duration: float = 0.0
 var dragging_timeline: bool = false
 var current_file_mode: int = 0
 
-# -- Constants and Enums --
 const NOTE_TYPES = ["any", "cut", "bump", "deflect", "pierce"]
 const DIFFICULTIES = ["Easy", "Normal", "Hard", "Expert"]
 enum FileMode { LOAD_JSON, AUDIO, COVER }
 
 func _ready() -> void:
 	_setup_ui()
-	
-	# Connect Grid Size changes to regeneration
+		
 	grid_rows_input.value_changed.connect(func(_v): _setup_grid())
 	grid_cols_input.value_changed.connect(func(_v): _setup_grid())
-	
-	# Connect Audio Path changes (Manual text entry)
+		
 	audio_path_input.text_submitted.connect(_on_audio_path_submitted)
 	
 	if clear_button:
 		clear_button.pressed.connect(_on_clear_button_pressed)
-
-	# Initial Setup if data exists
+	
 	if not audio_path_input.text.is_empty():
 		_on_audio_path_submitted(audio_path_input.text)
 	_setup_grid()
 	
-	generate_button.pressed.connect(_on_generate_button_pressed)
-	# The popup might emit a signal if you set it up that way, or we connect it here
+	generate_button.pressed.connect(_on_generate_button_pressed)	
 	if generator_popup.has_signal("notes_generated"):
 		generator_popup.notes_generated.connect(_on_notes_generated_received)
 
@@ -77,32 +70,26 @@ func _process(_delta: float) -> void:
 	_update_time_display()
 	_refresh_grid_visuals()
 
-# --- UI Setup ---
-func _setup_ui() -> void:
-	# Note Types
+func _setup_ui() -> void:	
 	type_selector.clear()
 	for type in NOTE_TYPES:
 		type_selector.add_item(type.capitalize())
-	
-	# Difficulty
+		
 	difficulty_input.clear()
 	for diff in DIFFICULTIES:
 		difficulty_input.add_item(diff)
-	
-	# Signals
+		
 	timeline_slider.drag_started.connect(func(): dragging_timeline = true)
 	timeline_slider.drag_ended.connect(_on_timeline_drag_ended)
 	play_button.pressed.connect(_on_play_pause_pressed)
 	prev_note_button.pressed.connect(_on_prev_note_pressed)
 	next_note_button.pressed.connect(_on_next_note_pressed)
-	
-	# Defaults
+		
 	if bpm_input.value == 0: bpm_input.value = 120
 	if grid_rows_input.value == 0: grid_rows_input.value = 3
 	if grid_cols_input.value == 0: grid_cols_input.value = 4
 
-func _setup_grid() -> void:
-	# Clear existing
+func _setup_grid() -> void:	
 	for child in grid_container.get_children():
 		child.queue_free()
 	
@@ -110,8 +97,7 @@ func _setup_grid() -> void:
 	var rows = int(grid_rows_input.value)
 	
 	grid_container.columns = cols
-	
-	# Create buttons (inverted Y so 0 is bottom)
+		
 	for y in range(rows - 1, -1, -1): 
 		for x in range(cols):      
 			var btn = Button.new()
@@ -122,7 +108,6 @@ func _setup_grid() -> void:
 			btn.pressed.connect(_on_grid_cell_pressed.bind(x, y))
 			grid_container.add_child(btn)
 
-# --- File Dialog Handling ---
 
 func _on_load_button_pressed() -> void:
 	current_file_mode = FileMode.LOAD_JSON
@@ -152,27 +137,23 @@ func _on_file_dialog_file_selected(path: String) -> void:
 		FileMode.COVER:
 			cover_path_input.text = path
 
-# --- Audio Loading Logic ---
 
 func _on_audio_path_submitted(path_text: String) -> void:
 	if path_text.is_empty(): return
 	
 	var stream: AudioStream = null
-	
-	# 1. Try Standard Load (Works for res://)
+		
 	if path_text.begins_with("res://"):
 		if FileAccess.file_exists(path_text):
 			stream = load(path_text)
-	
-	# 2. Try External Load (Works for C:/...)
+		
 	else:
 		stream = _load_external_audio(path_text)
 		
 	if stream:
 		audio_player.stream = stream
 		song_duration = stream.get_length()
-		timeline_slider.max_value = song_duration
-		# Auto-set preview end if needed
+		timeline_slider.max_value = song_duration		
 		if preview_end_input.value == 0:
 			preview_end_input.value = song_duration
 		print("Audio Loaded: ", path_text)
@@ -198,7 +179,6 @@ func _load_external_audio(path: String) -> AudioStream:
 			if s: return s
 	return null
 
-# --- Interactions ---
 
 func _on_play_pause_pressed() -> void:
 	if audio_player.playing:
@@ -212,8 +192,7 @@ func _on_prev_note_pressed() -> void:
 	
 	var current_time = timeline_slider.value
 	var target_time = -1.0
-	
-	# Find the note with the largest time that is still SMALLER than current_time - epsilon
+		
 	for i in range(current_notes.size() - 1, -1, -1):
 		var t = current_notes[i].time
 		if t < current_time - 0.01:
@@ -228,8 +207,7 @@ func _on_next_note_pressed() -> void:
 	
 	var current_time = timeline_slider.value
 	var target_time = -1.0
-	
-	# Find the note with the smallest time that is LARGER than current_time + epsilon
+		
 	for note in current_notes:
 		var t = note.time
 		if t > current_time + 0.01:
@@ -245,8 +223,7 @@ func _seek_to(time: float) -> void:
 		audio_player.play(time)
 	else:
 		audio_player.seek(time)
-	
-	# Force grid refresh immediately so visual feedback is instant
+		
 	_refresh_grid_visuals()
 
 func _on_timeline_drag_ended(_value_changed: bool) -> void:
@@ -281,7 +258,6 @@ func _on_grid_cell_pressed(x: int, y: int) -> void:
 		current_notes.append(note)
 		current_notes.sort_custom(func(a, b): return a.time < b.time)
 
-# --- Logic ---
 
 func _quantize_time(time: float) -> float:
 	var bpm = bpm_input.value
@@ -327,7 +303,6 @@ func _update_time_display() -> void:
 	var ms = int((timeline_slider.value - int(timeline_slider.value)) * 100)
 	time_label.text = "%02d:%02d:%02d" % [m, s, ms]
 
-# --- File I/O ---
 
 func _on_save_button_pressed() -> void:
 	save_beatmap()
@@ -342,8 +317,7 @@ func _load_beatmap_from_file(path: String) -> void:
 	if json.parse(file.get_as_text()) == OK:
 		var data = json.data
 		var info = data.get("song_info", {})
-		
-		# Metadata
+				
 		title_input.text = info.get("full_name", "")
 		filename_input.text = info.get("technical_name", "")
 		author_input.text = info.get("author", "")
@@ -351,31 +325,26 @@ func _load_beatmap_from_file(path: String) -> void:
 		audio_path_input.text = info.get("audio_path", "")
 		cover_path_input.text = info.get("cover_path", "")
 		env_input.text = info.get("environment_id", "default")
-		
-		# Stats
+				
 		bpm_input.value = info.get("bpm", 120)
 		preview_start_input.value = info.get("preview_start", 0)
 		preview_end_input.value = info.get("preview_end", 0)
-		
-		# Difficulty
+				
 		var diff = info.get("difficulty", "Normal")
 		var diff_idx = DIFFICULTIES.find(diff)
 		if diff_idx != -1: difficulty_input.selected = diff_idx
-		
-		# Grid
+				
 		var grid = info.get("grid_size", {})
 		grid_rows_input.value = grid.get("rows", 3)
 		grid_cols_input.value = grid.get("cols", 4)
-		
-		# Notes
+				
 		current_notes.clear()
 		for n in data.get("notes", []):
 			n.time = float(n.time)
 			n.lane_x = float(n.lane_x)
 			n.height_y = float(n.height_y)
 			current_notes.append(n)
-			
-		# Refresh
+					
 		_on_audio_path_submitted(audio_path_input.text)
 		_setup_grid()
 		print("Loaded beatmap: ", path)
@@ -424,8 +393,7 @@ func _on_generate_button_pressed() -> void:
 	if not audio_player.stream:
 		print("Load audio first!")
 		return
-	
-	# Pass current data to the popup
+		
 	if generator_popup.has_method("setup"):
 		generator_popup.setup(
 			audio_player.stream,
@@ -435,17 +403,14 @@ func _on_generate_button_pressed() -> void:
 			int(grid_rows_input.value)
 		)
 
-func _on_notes_generated_received(new_notes: Array[Dictionary]) -> void:
-	# Append or Replace? Let's Replace for "Auto Gen", but maybe warn user?
-	# For now, let's just replace the list.
+func _on_notes_generated_received(new_notes: Array[Dictionary]) -> void:		
 	current_notes = new_notes
 	current_notes.sort_custom(func(a, b): return a.time < b.time)
 	_refresh_grid_visuals()
 	print("Generated ", current_notes.size(), " notes automatically.")
 
 
-func _on_clear_button_pressed() -> void:
-	# Optional: Add a confirmation dialog here if you want safety
+func _on_clear_button_pressed() -> void:	
 	current_notes.clear()
 	_refresh_grid_visuals()
 	print("All notes cleared.")

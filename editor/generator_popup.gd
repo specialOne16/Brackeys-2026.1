@@ -10,7 +10,6 @@ signal notes_generated(new_notes: Array[Dictionary])
 var _weight_sliders: Dictionary = {}
 const NOTE_TYPES = ["any", "cut", "bump", "deflect", "pierce"]
 
-# Data from the main editor
 var current_audio_stream: AudioStream
 var current_bpm: float = 120.0
 var current_duration: float = 0.0
@@ -28,7 +27,6 @@ func _create_weight_sliders() -> void:
 		var slider = HSlider.new()
 		slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		slider.max_value = 10.0
-		slider.value = 5.0 # Default weight
 		if type == "any": slider.value = 8.0
 		
 		weights_grid.add_child(label)
@@ -58,13 +56,10 @@ func _on_generate_btn_pressed() -> void:
 func _run_generation() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	
-	# Settings
-	var snap_val = div_option.get_selected_id() # 1, 2, or 4
 	var step_time = (60.0 / current_bpm) / float(snap_val)
 	var density = density_slider.value
 	var threshold = threshold_slider.value
 	
-	# WAV Analysis Setup
 	var wav_data: PackedByteArray
 	var can_analyze_audio = false
 	var mix_rate = 44100
@@ -77,31 +72,24 @@ func _run_generation() -> Array[Dictionary]:
 			wav_data = wav.data
 			mix_rate = wav.mix_rate
 			stereo = wav.stereo
-			# format: 0=8bit, 1=16bit
 			format_bits = 8 if wav.format == AudioStreamWAV.FORMAT_8_BITS else 16
 			can_analyze_audio = true
 			print("Analyzing WAV data for generation...")
 	
-	# Loop through time
 	var t = 0.0
-	# Offset start slightly to avoid 0.0 overlapping weirdly
 	t += step_time 
 	
 	while t < current_duration:
 		var place_note = false
 		
 		if can_analyze_audio:
-			# Amplitude check
 			var amp = _get_amplitude_at_time(wav_data, t, mix_rate, format_bits, stereo)
-			# Normalize amp roughly (it's often low)
 			amp = clamp(amp * 2.0, 0.0, 1.0) 
 			
 			if amp > threshold:
-				# Higher chance if loud, but still respected by density
 				if randf() < (density + 0.2): 
 					place_note = true
 		else:
-			# Fallback: Pure random density
 			if randf() < density:
 				place_note = true
 		
@@ -122,7 +110,6 @@ func _run_generation() -> Array[Dictionary]:
 	return result
 
 func _get_amplitude_at_time(data: PackedByteArray, time: float, rate: int, bits: int, is_stereo: bool) -> float:
-	# Calculate byte index
 	var frame_size = (bits / 8) * (2 if is_stereo else 1)
 	var frame_idx = int(time * rate)
 	var byte_idx = frame_idx * frame_size
@@ -130,20 +117,15 @@ func _get_amplitude_at_time(data: PackedByteArray, time: float, rate: int, bits:
 	if byte_idx < 0 or byte_idx >= data.size() - frame_size:
 		return 0.0
 		
-	# Read sample
 	var sample_val = 0.0
 	
-	# Helper to read bytes
 	if bits == 16:
-		# Read first channel (Low byte, High byte - Little Endian)
 		var b1 = data[byte_idx]
 		var b2 = data[byte_idx + 1]
-		# Convert to 16-bit signed integer
 		var s = (b2 << 8) | b1
 		if s > 32767: s -= 65536
 		sample_val = abs(s / 32768.0)
 	else:
-		# 8-bit unsigned (0-255, center 128)
 		var b = data[byte_idx]
 		sample_val = abs((b - 128) / 128.0)
 		
