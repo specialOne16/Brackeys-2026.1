@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dyv0wih2i5g1h" path="res://gameplay/gameplay.gd" id="1_nyvx4"]
 [ext_resource type="PackedScene" uid="uid://brvi2mn4roeku" path="res://entities/player/player.tscn" id="2_ueusv"]
 [ext_resource type="PackedScene" uid="uid://d0fjslxysj5s" path="res://entities/halberd/halberd.tscn" id="3_ktb3l"]
-[ext_resource type="PackedScene" uid="uid://ca5t2d35dmbkh" path="res://entities/note/note.tscn" id="4_ktb3l"]
+[ext_resource type="AudioStream" uid="uid://ba3yo7pk8ymbv" path="res://musics/Guardian of the Alps.wav" id="5_7pdct"]
 [ext_resource type="Script" uid="uid://cn7tprijdegc1" path="res://entities/note/node_spawner.gd" id="5_gvicd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nyvx4"]
@@ -33,15 +33,13 @@ halberd = NodePath("../Halberd")
 
 [node name="Halberd" parent="." instance=ExtResource("3_ktb3l")]
 
-[node name="Note" parent="." instance=ExtResource("4_ktb3l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
-
-[node name="Note2" parent="." instance=ExtResource("4_ktb3l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
-
 [node name="NodeSpawner" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
 script = ExtResource("5_gvicd")
 height = 1.0
 metadata/_custom_type_script = "uid://cn7tprijdegc1"
+
+[node name="GuardianOfTheAlps" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_7pdct")
+autoplay = true

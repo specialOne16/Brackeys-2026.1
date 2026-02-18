@@ -1,8 +1,11 @@
 extends Node3D
 class_name NodeSpawner
 
-const CUT = preload("uid://ck1fbulp3abgg")
-const PIERCE = preload("uid://6mvghlctlk5k")
+const ANY = preload("uid://cutpon7qvl3ca")
+const BUMP = preload("uid://ckscnewigjhk3")
+const CUT = preload("uid://e8e40ven26br")
+const DEFLECT = preload("uid://c80hllwl12v48")
+const PIERCE = preload("uid://bu1dyfn1nctti")
 
 const NOTE = preload("uid://ca5t2d35dmbkh")
 
@@ -10,26 +13,11 @@ const NOTE = preload("uid://ca5t2d35dmbkh")
 @export var song_timestamp: float = 0
 @export var height: float = 0
 
-const notes = [
-	{
-		"time": 1.0,
-		"position_x": 0.5,
-		"position_y": 0.5,
-		"type": "cut"
-	},
-	{
-		"time": 2.0,
-		"position_x": -0.5,
-		"position_y": 0.5,
-		"type": "pierce"
-	}
-]
-
 var _current_notes_index = 0
 
 func _process(_delta: float) -> void:
-	while _current_notes_index < notes.size() and song_timestamp >= notes[_current_notes_index].time:
-		_spawn_note(notes[_current_notes_index])
+	while _current_notes_index < TestMusic.NOTES.size() and song_timestamp >= TestMusic.NOTES[_current_notes_index].time:
+		_spawn_note(TestMusic.NOTES[_current_notes_index])
 		_current_notes_index += 1
 
 func _spawn_note(data: Dictionary):
@@ -37,6 +25,9 @@ func _spawn_note(data: Dictionary):
 	note.velocity = note_direction
 	note.position = Vector3(data.position_x, data.position_y + height, position.z)
 	match data.type:
-		"pierce": note.material = PIERCE
-		"cur": note.material = CUT
+		"any": note.type = ANY
+		"deflect": note.type = DEFLECT
+		"cut": note.type = CUT
+		"bump": note.type = BUMP
+		"pierce": note.type = PIERCE
 	get_parent().add_child(note)

@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 3d_physics/layer_6="SpikeOrigin"
 3d_physics/layer_7="BladePoint"
 3d_physics/layer_8="BladeOrigin"
+3d_physics/layer_9="PoleOrigin"
 
 [rendering]
 

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NoteType" load_steps=3 format=3 uid="uid://c80hllwl12v48"]
+
+[ext_resource type="Script" uid="uid://dbkncb7wrc7ml" path="res://entities/note/types/note_type.gd" id="1_bl7j3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bl7j3"]
+albedo_color = Color(0.66030914, 0.9337068, 0.95795935, 1)
+
+[resource]
+script = ExtResource("1_bl7j3")
+name = "deflect"
+material = SubResource("StandardMaterial3D_bl7j3")
+metadata/_custom_type_script = "uid://dbkncb7wrc7ml"

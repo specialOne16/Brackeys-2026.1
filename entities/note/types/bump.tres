@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NoteType" load_steps=3 format=3 uid="uid://ckscnewigjhk3"]
+
+[ext_resource type="Script" uid="uid://dbkncb7wrc7ml" path="res://entities/note/types/note_type.gd" id="1_883lt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_883lt"]
+albedo_color = Color(0.52373105, 0.93819463, 0.5725471, 1)
+
+[resource]
+script = ExtResource("1_883lt")
+name = "bump"
+material = SubResource("StandardMaterial3D_883lt")
+metadata/_custom_type_script = "uid://dbkncb7wrc7ml"
