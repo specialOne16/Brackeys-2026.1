@@ -74,6 +74,7 @@ func _on_back_pressed() -> void:
 
 func _on_play_pressed() -> void:
 	if selected_beatmap:
-		# For now, print to confirm it works
-		print("Starting gameplay with: ", selected_beatmap.technical_name)
-		# get_tree().change_scene_to_file("res://gameplay/gameplay.tscn")
+		GameManager.selected_beatmap_path = "res://beatmaps/" + selected_beatmap.technical_name + ".json"
+		get_tree().change_scene_to_file("res://gameplay/gameplay.tscn")
+	else:
+		print("No song selected!")
