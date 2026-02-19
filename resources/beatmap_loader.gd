@@ -13,7 +13,7 @@ static func load_beatmap(path: String) -> BeatmapData:
 	var error = json.parse(json_text)
 	
 	if error != OK:
-		push_error("JSON Parse Error: " + json.get_error_message() + " in " + json_text + " at line " + str(json.get_error_line()))
+		push_error("JSON Parse Error: " + json.get_error_message() + " at line " + str(json.get_error_line()))
 		return null
 		
 	var data_dict = json.data
