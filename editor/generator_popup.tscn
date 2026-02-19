@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://b8qj7j6k5l3m"]
+[gd_scene format=3 uid="uid://dbh7t1g20x0ot"]
 
-[ext_resource type="Script" path="res://editor/generator_popup.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://b2ki4yt0v25xa" path="res://editor/generator_popup.gd" id="1_script"]
 
-[node name="GeneratorPopup" type="Window"]
+[node name="GeneratorPopup" type="Window" unique_id=1356518951]
+oversampling_override = 1.0
 title = "Auto-Generate Notes"
 initial_position = 2
 size = Vector2i(400, 550)
@@ -11,14 +12,14 @@ transient = true
 exclusive = true
 script = ExtResource("1_script")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1175176891]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=2124657800]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -29,32 +30,32 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBox" type="VBoxContainer" parent="Margin"]
+[node name="VBox" type="VBoxContainer" parent="Margin" unique_id=730874169]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="Margin/VBox"]
+[node name="Label" type="Label" parent="Margin/VBox" unique_id=465618448]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Generation Settings"
 horizontal_alignment = 1
 
-[node name="SettingsGrid" type="GridContainer" parent="Margin/VBox"]
+[node name="SettingsGrid" type="GridContainer" parent="Margin/VBox" unique_id=1637429825]
 layout_mode = 2
-columns = 2
 theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 10
+columns = 2
 
-[node name="LabelDiv" type="Label" parent="Margin/VBox/SettingsGrid"]
+[node name="LabelDiv" type="Label" parent="Margin/VBox/SettingsGrid" unique_id=750809037]
 layout_mode = 2
 text = "Beat Snap:"
 
-[node name="DivOption" type="OptionButton" parent="Margin/VBox/SettingsGrid"]
+[node name="DivOption" type="OptionButton" parent="Margin/VBox/SettingsGrid" unique_id=1434195724]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 3
 selected = 1
+item_count = 3
 popup/item_0/text = "1/1 (Quarter Notes)"
 popup/item_0/id = 1
 popup/item_1/text = "1/2 (Eighth Notes)"
@@ -62,57 +63,56 @@ popup/item_1/id = 2
 popup/item_2/text = "1/4 (Sixteenths)"
 popup/item_2/id = 4
 
-[node name="LabelDens" type="Label" parent="Margin/VBox/SettingsGrid"]
+[node name="LabelDens" type="Label" parent="Margin/VBox/SettingsGrid" unique_id=1274736458]
 layout_mode = 2
 text = "Density:"
 
-[node name="DensitySlider" type="HSlider" parent="Margin/VBox/SettingsGrid"]
+[node name="DensitySlider" type="HSlider" parent="Margin/VBox/SettingsGrid" unique_id=654210530]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 0.7
 
-[node name="LabelThresh" type="Label" parent="Margin/VBox/SettingsGrid"]
+[node name="LabelThresh" type="Label" parent="Margin/VBox/SettingsGrid" unique_id=1487705868]
 layout_mode = 2
 text = "Audio Threshold:"
-tooltip = "Only works for WAV files. Higher value = only loud beats spawn notes."
 
-[node name="ThresholdSlider" type="HSlider" parent="Margin/VBox/SettingsGrid"]
+[node name="ThresholdSlider" type="HSlider" parent="Margin/VBox/SettingsGrid" unique_id=665918317]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 0.2
 
-[node name="HSeparator" type="HSeparator" parent="Margin/VBox"]
+[node name="HSeparator" type="HSeparator" parent="Margin/VBox" unique_id=1600510451]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="Margin/VBox"]
+[node name="Label2" type="Label" parent="Margin/VBox" unique_id=1058073434]
 layout_mode = 2
 text = "Note Type Probabilities"
 horizontal_alignment = 1
 
-[node name="WeightsGrid" type="GridContainer" parent="Margin/VBox"]
+[node name="WeightsGrid" type="GridContainer" parent="Margin/VBox" unique_id=538471487]
 unique_name_in_owner = true
 layout_mode = 2
 columns = 2
 
-[node name="Spacer" type="Control" parent="Margin/VBox"]
+[node name="Spacer" type="Control" parent="Margin/VBox" unique_id=1946728331]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBox" type="HBoxContainer" parent="Margin/VBox"]
+[node name="HBox" type="HBoxContainer" parent="Margin/VBox" unique_id=301946143]
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 20
+alignment = 1
 
-[node name="CancelBtn" type="Button" parent="Margin/VBox/HBox"]
+[node name="CancelBtn" type="Button" parent="Margin/VBox/HBox" unique_id=1842226946]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 text = "Cancel"
 
-[node name="GenerateBtn" type="Button" parent="Margin/VBox/HBox"]
+[node name="GenerateBtn" type="Button" parent="Margin/VBox/HBox" unique_id=369013082]
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.611765, 1, 0.643137, 1)

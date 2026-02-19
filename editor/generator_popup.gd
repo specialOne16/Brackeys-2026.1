@@ -10,6 +10,7 @@ signal notes_generated(new_notes: Array[Dictionary])
 var _weight_sliders: Dictionary = {}
 const NOTE_TYPES = ["any", "cut", "bump", "deflect", "pierce"]
 
+# Data from the main editor
 var current_audio_stream: AudioStream
 var current_bpm: float = 120.0
 var current_duration: float = 0.0
@@ -27,6 +28,7 @@ func _create_weight_sliders() -> void:
 		var slider = HSlider.new()
 		slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		slider.max_value = 10.0
+		slider.value = 5.0 # Default weight
 		if type == "any": slider.value = 8.0
 		
 		weights_grid.add_child(label)
@@ -56,6 +58,7 @@ func _on_generate_btn_pressed() -> void:
 func _run_generation() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	
+	var snap_val = div_option.get_selected_id() # 1, 2, or 4
 	var step_time = (60.0 / current_bpm) / float(snap_val)
 	var density = density_slider.value
 	var threshold = threshold_slider.value
