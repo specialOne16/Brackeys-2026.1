@@ -33,7 +33,6 @@ func _load_all_beatmaps() -> void:
 	available_beatmaps.sort_custom(func(a, b): return a.full_name < b.full_name)
 
 func _populate_song_list() -> void:
-	# Clear placeholder UI
 	for child in song_list_vbox.get_children():
 		child.queue_free()
 		
