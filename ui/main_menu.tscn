@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://cv5oqyua72812"]
+
+[ext_resource type="Script" uid="uid://os8vwe5bhfr7" path="res://ui/main_menu.gd" id="1_t7e0r"]
+
+[node name="MainMenu" type="Control" unique_id=347423935]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t7e0r")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1331899196]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=331447703]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1629947124]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Beat Halberd"
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1935131276]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Play"
+
+[node name="EditorButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1589099507]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.882353, 0.388235, 1)
+text = "Song Editor"
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=761312995]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1958128053]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Quit"
+
+[node name="QuitDialog" type="ConfirmationDialog" parent="." unique_id=750256436]
+title = "Quit Game"
+initial_position = 2
+dialog_text = "Are you sure you want to quit?"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/EditorButton" to="." method="_on_editor_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="confirmed" from="QuitDialog" to="." method="_on_quit_dialog_confirmed"]

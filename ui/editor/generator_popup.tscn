@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dbh7t1g20x0ot"]
 
-[ext_resource type="Script" uid="uid://b2ki4yt0v25xa" path="res://editor/generator_popup.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://b2ki4yt0v25xa" path="res://ui/editor/generator_popup.gd" id="1_script"]
 
 [node name="GeneratorPopup" type="Window" unique_id=1356518951]
 oversampling_override = 1.0
