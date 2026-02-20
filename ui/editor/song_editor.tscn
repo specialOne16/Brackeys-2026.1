@@ -304,7 +304,6 @@ filters = PackedStringArray("*.json ; Beatmap Files", "*.wav, *.ogg, *.mp3 ; Aud
 
 [node name="GeneratorPopup" parent="." unique_id=1838870190 instance=ExtResource("3_genpop")]
 
-[connection signal="pressed" from="MainLayout/TopBar/FileInfo/BackButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="MainLayout/TopBar/FileInfo/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="MainLayout/TopBar/FileInfo/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="MainLayout/TopBar/FileInfo/LoadButton" to="." method="_on_load_button_pressed"]
