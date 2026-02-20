@@ -44,6 +44,9 @@ func parse_json(data: Dictionary) -> void:
 	var cover_path = info.get("cover_path", "")
 	if cover_path and ResourceLoader.exists(cover_path):
 		cover_texture = load(cover_path)
+	else:
+		cover_path = "res://covers/best-404-pages-768x492.png"
+		cover_texture = load(cover_path)
 	
 	notes.clear()
 	var raw_notes = data.get("notes", [])

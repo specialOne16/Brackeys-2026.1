@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://dh04oel6j1kpw"]
+
+[ext_resource type="Script" uid="uid://bupqmbvbtsf8e" path="res://ui/song_selector.gd" id="1_script"]
+
+[node name="SongSelector" type="Control" unique_id=1244675573]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1103798752]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1770792406]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="LeftHalf" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1389069268]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="Header" type="Label" parent="MarginContainer/HBoxContainer/LeftHalf" unique_id=1943115403]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Song Selection"
+
+[node name="TopButtons" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftHalf" unique_id=1557341733]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/LeftHalf/TopButtons" unique_id=1567050206]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Back to Menu"
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/HBoxContainer/LeftHalf/TopButtons" unique_id=443633114]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Settings"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/LeftHalf" unique_id=2092095987]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SongListVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftHalf/ScrollContainer" unique_id=843293109]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="RightHalf" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=610295448]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="BigCover" type="TextureRect" parent="MarginContainer/HBoxContainer/RightHalf" unique_id=892687706]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SongTitle" type="Label" parent="MarginContainer/HBoxContainer/RightHalf" unique_id=957414444]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Song Title"
+horizontal_alignment = 1
+
+[node name="SongAuthor" type="Label" parent="MarginContainer/HBoxContainer/RightHalf" unique_id=1389447074]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.701961, 0.701961, 0.701961, 1)
+theme_override_font_sizes/font_size = 20
+text = "Artist Name"
+horizontal_alignment = 1
+
+[node name="StatsHBox" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightHalf" unique_id=1306422130]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="NoteCount" type="Label" parent="MarginContainer/HBoxContainer/RightHalf/StatsHBox" unique_id=1569814705]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Notes: 0"
+
+[node name="NPSLabel" type="Label" parent="MarginContainer/HBoxContainer/RightHalf/StatsHBox" unique_id=299279462]
+unique_name_in_owner = true
+layout_mode = 2
+text = "NPS: 0.0"
+
+[node name="Difficulties" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightHalf" unique_id=1666201805]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="EasyBtn" type="Button" parent="MarginContainer/HBoxContainer/RightHalf/Difficulties" unique_id=1962038833]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Easy"
+
+[node name="NormalBtn" type="Button" parent="MarginContainer/HBoxContainer/RightHalf/Difficulties" unique_id=772366387]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Normal"
+
+[node name="HardBtn" type="Button" parent="MarginContainer/HBoxContainer/RightHalf/Difficulties" unique_id=1541162823]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Hard"
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/RightHalf" unique_id=1919870637]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="MarginContainer/HBoxContainer/RightHalf" unique_id=433189901]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.482353, 1, 0.533333, 1)
+theme_override_font_sizes/font_size = 24
+text = "PLAY"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/LeftHalf/TopButtons/BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/RightHalf/PlayButton" to="." method="_on_play_pressed"]

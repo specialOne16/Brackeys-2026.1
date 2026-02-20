@@ -15,9 +15,13 @@ func _ready() -> void:
 				XRServer.center_on_hmd(XRServer.RotationMode.RESET_BUT_KEEP_TILT, true)
 			)
 			
-	# --- TO DO ---
-	# In the future, this should come from our song selection menu 
-	var beatmap = BeatmapLoader.load_beatmap("res://beatmaps/guardian_normal.json")
+	var path_to_load = GameManager.selected_beatmap_path
+	
+	if path_to_load == "":
+		path_to_load = "res://beatmaps/guardian_normal.json" 
+		print("Warning: No song selected in GameManager, using fallback.")
+		
+	var beatmap = BeatmapLoader.load_beatmap(path_to_load)
 	
 	node_spawner.beatmap_notes = beatmap.notes
 	

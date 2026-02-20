@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c68nq55dqc040"]
 
-[ext_resource type="Script" uid="uid://bjaitim5kmxfb" path="res://editor/song_editor.gd" id="1_bd5ru"]
+[ext_resource type="Script" uid="uid://bjaitim5kmxfb" path="res://ui/editor/song_editor.gd" id="1_bd5ru"]
 [ext_resource type="AudioStream" uid="uid://ba3yo7pk8ymbv" path="res://musics/Guardian of the Alps.wav" id="2_u24ke"]
-[ext_resource type="PackedScene" path="res://editor/generator_popup.tscn" id="3_genpop"]
+[ext_resource type="PackedScene" uid="uid://dbh7t1g20x0ot" path="res://ui/editor/generator_popup.tscn" id="3_genpop"]
 
 [node name="SongEditor" type="Control" unique_id=1781666654 node_paths=PackedStringArray("audio_player", "timeline_slider", "time_label", "play_button", "prev_note_button", "next_note_button", "grid_container", "type_selector", "snap_checkbox", "bpm_input", "grid_rows_input", "grid_cols_input", "filename_input", "title_input", "author_input", "difficulty_input", "audio_path_input", "creator_input", "cover_path_input", "env_input", "preview_start_input", "preview_end_input", "file_dialog", "generator_popup", "generate_button", "clear_button")]
 layout_mode = 3
@@ -37,7 +37,7 @@ preview_end_input = NodePath("MainLayout/MetaPanel/VBox/StatsRow/PrevEndInput")
 file_dialog = NodePath("FileDialog")
 generator_popup = NodePath("GeneratorPopup")
 generate_button = NodePath("MainLayout/TopBar/FileInfo/GenerateButton")
-clear_button = NodePath("MainLayout/TopBar/FileInfo/ClearButton")
+clear_button = NodePath("MainLayout/TimelineArea/HBoxContainer/ClearButton")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1562756325]
 stream = ExtResource("2_u24ke")
@@ -70,6 +70,12 @@ theme_override_constants/separation = 20
 [node name="FileInfo" type="HBoxContainer" parent="MainLayout/TopBar" unique_id=2005967990]
 layout_mode = 2
 
+[node name="BackButton" type="Button" parent="MainLayout/TopBar/FileInfo" unique_id=650927082]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9632985, 0.29773515, 0.59210753, 1)
+text = "Back"
+
 [node name="SaveButton" type="Button" parent="MainLayout/TopBar/FileInfo" unique_id=574786150]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
@@ -86,13 +92,7 @@ text = "Load JSON"
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.909804, 0.462745, 1)
-text = "Auto Generator"
-
-[node name="ClearButton" type="Button" parent="MainLayout/TopBar/FileInfo" unique_id=291018982]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.47, 0.42, 1)
-text = "Clear All"
+text = "Auto Gen"
 
 [node name="FilenameInput" type="LineEdit" parent="MainLayout/TopBar/FileInfo" unique_id=1415547372]
 custom_minimum_size = Vector2(150, 0)
@@ -268,6 +268,12 @@ text = "Note Type: "
 [node name="TypeSelector" type="OptionButton" parent="MainLayout/TimelineArea/HBoxContainer" unique_id=398570086]
 layout_mode = 2
 
+[node name="ClearButton" type="Button" parent="MainLayout/TimelineArea/HBoxContainer" unique_id=291018982]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.47, 0.42, 1)
+text = "Clear All"
+
 [node name="HSlider" type="HSlider" parent="MainLayout/TimelineArea" unique_id=763154118]
 layout_mode = 2
 step = 0.01
@@ -298,6 +304,7 @@ filters = PackedStringArray("*.json ; Beatmap Files", "*.wav, *.ogg, *.mp3 ; Aud
 
 [node name="GeneratorPopup" parent="." unique_id=1838870190 instance=ExtResource("3_genpop")]
 
+[connection signal="pressed" from="MainLayout/TopBar/FileInfo/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="MainLayout/TopBar/FileInfo/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="MainLayout/TopBar/FileInfo/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="MainLayout/TopBar/FileInfo/GenerateButton" to="." method="_on_generate_button_pressed"]
