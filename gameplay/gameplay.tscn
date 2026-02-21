@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://db8hg42bvgr2"]
+[gd_scene format=3 uid="uid://db8hg42bvgr2"]
 
 [ext_resource type="Script" uid="uid://dyv0wih2i5g1h" path="res://gameplay/gameplay.gd" id="1_nyvx4"]
 [ext_resource type="PackedScene" uid="uid://brvi2mn4roeku" path="res://entities/player/player.tscn" id="2_ueusv"]
@@ -38,6 +38,8 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
 script = ExtResource("5_gvicd")
 height = 1.0
+spacing_scale = Vector2(0.2, 0.2)
+global_offset = Vector3(-0.3, 0.3, 1)
 metadata/_custom_type_script = "uid://cn7tprijdegc1"
 
 [node name="GuardianOfTheAlps" type="AudioStreamPlayer" parent="."]

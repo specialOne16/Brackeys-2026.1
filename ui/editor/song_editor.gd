@@ -35,6 +35,12 @@ extends Control
 @export var generate_button: Button
 @export var clear_button: Button
 
+@onready var global_approach_input: SpinBox = %GlobalApproachInput
+@onready var note_approach_input: SpinBox = %NoteApproachInput
+
+var global_approach_time: float = 2.9
+var current_note_approach_time: float = 0
+
 var current_notes: Array[Dictionary] = []
 var song_duration: float = 0.0
 var dragging_timeline: bool = false
@@ -51,6 +57,11 @@ func _ready() -> void:
 	grid_cols_input.value_changed.connect(func(_v): _setup_grid())
 		
 	audio_path_input.text_submitted.connect(_on_audio_path_submitted)
+	
+	if global_approach_input:
+		global_approach_input.value_changed.connect(func(val): global_approach_time = val)
+	if note_approach_input:
+		note_approach_input.value_changed.connect(func(val): current_note_approach_time = val)
 	
 	if clear_button:
 		clear_button.pressed.connect(_on_clear_button_pressed)
@@ -255,6 +266,10 @@ func _on_grid_cell_pressed(x: int, y: int) -> void:
 			"height_y": float(y),
 			"type": type_str
 		}
+		
+		if current_note_approach_time > 0.0:
+			note["approach_time"] = current_note_approach_time
+		
 		current_notes.append(note)
 		current_notes.sort_custom(func(a, b): return a.time < b.time)
 
@@ -337,7 +352,11 @@ func _load_beatmap_from_file(path: String) -> void:
 		var grid = info.get("grid_size", {})
 		grid_rows_input.value = grid.get("rows", 3)
 		grid_cols_input.value = grid.get("cols", 4)
-				
+		
+		global_approach_time = data.get("global_approach_time", 2.9)
+		if global_approach_input:
+			global_approach_input.value = global_approach_time
+		
 		current_notes.clear()
 		for n in data.get("notes", []):
 			n.time = float(n.time)
@@ -351,6 +370,10 @@ func _load_beatmap_from_file(path: String) -> void:
 
 func save_beatmap() -> void:
 	var diff_str = DIFFICULTIES[difficulty_input.selected]
+	
+	if global_approach_input:
+		global_approach_input.apply()
+		global_approach_time = global_approach_input.value
 	
 	var data = {
 		"_meta": { "version": "1.2" },
@@ -372,6 +395,7 @@ func save_beatmap() -> void:
 				"cols": grid_cols_input.value
 			}
 		},
+		"global_approach_time": global_approach_time,
 		"notes": current_notes
 	}
 	

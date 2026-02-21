@@ -2,7 +2,6 @@ extends Node3D
 class_name Note
 
 @export var type: NoteType
-@export var velocity: Vector3
 
 @onready var note_model: MeshInstance3D = %NoteModel
 @onready var explosion_effect: GPUParticles3D = %ExplosionEffect
@@ -15,16 +14,49 @@ const POINT_TO_ORIGIN_COUNTDOWN = 1.0
 var spike_countdown = 0.0
 var blade_countdown = 0.0
 
+var approach_time: float
+var hit_time: float
+
+var start_position: Vector3
+var target_hit_position: Vector3
+
+var node_spawner: NodeSpawner
+
 func _ready() -> void:
-	note_model.material_override = type.material
-	explosion_effect.material_override = type.material
+	pass
+
+func setup(p_approach_time: float, p_hit_time: float, p_start_pos: Vector3, p_target_pos: Vector3, spawner_ref: NodeSpawner) -> void:
+	approach_time = p_approach_time
+	hit_time = p_hit_time
+	node_spawner = spawner_ref
 	
-	if type.name in ["pierce", "any"]:
-		spike_detector.area_entered.connect(_on_area_entered)
-	if type.name in ["cut", "deflect", "any"]:
-		blade_detector.area_entered.connect(_on_area_entered)
-	if type.name in ["bump", "deflect", "any"]:
-		pole_detector.area_entered.connect(_on_area_entered)
+	start_position = p_start_pos
+	target_hit_position = p_target_pos
+	global_position = start_position
+	
+	if type:
+		if type.material:
+			note_model.material_override = type.material
+			explosion_effect.material_override = type.material
+		
+		if type.name in ["pierce", "any"] and not spike_detector.area_entered.is_connected(_on_area_entered):
+			spike_detector.area_entered.connect(_on_area_entered)
+		if type.name in ["cut", "deflect", "any"] and not blade_detector.area_entered.is_connected(_on_area_entered):
+			blade_detector.area_entered.connect(_on_area_entered)
+		if type.name in ["bump", "deflect", "any"] and not pole_detector.area_entered.is_connected(_on_area_entered):
+			pole_detector.area_entered.connect(_on_area_entered)
+	
+
+func _process(delta: float) -> void:
+	var current_time = node_spawner.song_timestamp
+	
+	var time_left = hit_time - current_time
+	var progress = 1.0 - (time_left / approach_time)
+	
+	global_position = start_position.lerp(target_hit_position, progress)
+	
+	if progress > 1.2:
+		queue_free()
 
 func _physics_process(delta: float) -> void:
 	position += velocity * delta
