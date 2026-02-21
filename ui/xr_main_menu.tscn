@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://bxv68koa2mnj2"]
+
+[ext_resource type="Script" uid="uid://dip286wmh6xb7" path="res://ui/xr_main_menu.gd" id="1_l1l5h"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="2_666fj"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="3_lcv51"]
+[ext_resource type="PackedScene" uid="uid://cv5oqyua72812" path="res://ui/main_menu.tscn" id="4_asvgb"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rmr83"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_8uxxo"]
+sky_material = SubResource("ProceduralSkyMaterial_rmr83")
+
+[sub_resource type="Environment" id="Environment_ei257"]
+background_mode = 2
+sky = SubResource("Sky_8uxxo")
+tonemap_mode = 2
+
+[node name="XRMainMenu" type="Node3D"]
+script = ExtResource("1_l1l5h")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ei257")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="XRController3D" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="FunctionPointer" parent="XROrigin3D/XRController3D" instance=ExtResource("2_666fj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
+show_laser = 2
+laser_length = 1
+show_target = true
+
+[node name="XRController3D2" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="FunctionPointer" parent="XROrigin3D/XRController3D2" instance=ExtResource("2_666fj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, 0.05, -0.1)
+show_laser = 2
+laser_length = 1
+show_target = true
+
+[node name="Viewport2Din3D" parent="." instance=ExtResource("3_lcv51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
+scene = ExtResource("4_asvgb")
+viewport_size = Vector2(1920, 1080)
+input_gamepad = true
+transparent = 1
+scene_properties_keys = PackedStringArray("main_menu.gd")

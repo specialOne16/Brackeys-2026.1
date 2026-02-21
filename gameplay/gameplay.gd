@@ -16,12 +16,12 @@ func _ready() -> void:
 			)
 			
 	var path_to_load = GameManager.selected_beatmap_path
-	
-	if path_to_load == "":
-		path_to_load = "res://beatmaps/guardian_normal.json" 
-		print("Warning: No song selected in GameManager, using fallback.")
-		
 	var beatmap = BeatmapLoader.load_beatmap(path_to_load)
+	
+	if beatmap == null:
+		print("Warning: Using fallback song!")
+		path_to_load = "res://beatmaps/guardian_normal.json"
+		beatmap = BeatmapLoader.load_beatmap(path_to_load)
 	
 	node_spawner.beatmap_notes = beatmap.notes
 	

@@ -6,7 +6,7 @@ func _ready() -> void:
 	quit_dialog.hide()
 
 func _on_play_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://ui/song_selector.tscn")
+	get_tree().change_scene_to_file("res://ui/xr_song_selector.tscn")
 
 func _on_editor_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://ui/editor/song_editor.tscn")
