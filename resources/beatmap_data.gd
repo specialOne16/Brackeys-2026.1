@@ -21,6 +21,7 @@ class_name BeatmapData
 
 @export_group("Gameplay")
 @export var notes: Array[Dictionary] = [] 
+@export var global_approach_time: float = 2.9
 
 func parse_json(data: Dictionary) -> void:
 	var info = data.get("song_info", {})
@@ -48,6 +49,8 @@ func parse_json(data: Dictionary) -> void:
 		cover_path = "res://covers/best-404-pages-768x492.png"
 		cover_texture = load(cover_path)
 	
+	global_approach_time = data.get("global_approach_time", 2.9)
+	
 	notes.clear()
 	var raw_notes = data.get("notes", [])
 	for n in raw_notes:
@@ -55,5 +58,6 @@ func parse_json(data: Dictionary) -> void:
 			"time": float(n.get("time", 0.0)),
 			"type": str(n.get("type", "any")),
 			"position_x": float(n.get("lane_x", 0.0)),
-			"position_y": float(n.get("height_y", 0.0))
+			"position_y": float(n.get("height_y", 0.0)),
+			"approach_time": float(n.get("approach_time", 0.0))
 		})

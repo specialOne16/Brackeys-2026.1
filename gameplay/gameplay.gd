@@ -24,6 +24,7 @@ func _ready() -> void:
 	var beatmap = BeatmapLoader.load_beatmap(path_to_load)
 	
 	node_spawner.beatmap_notes = beatmap.notes
+	node_spawner.global_approach_time = beatmap.global_approach_time
 	
 	if beatmap.audio_stream:
 		audio_player.stream = beatmap.audio_stream
