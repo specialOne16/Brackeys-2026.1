@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://songhud123"]
+
+[ext_resource type="Script" path="res://ui/song_hud.gd" id="1_script"]
+
+[node name="SongHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TopLeft" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="ScoreHeader" type="Label" parent="Margin/TopLeft"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SCORE"
+
+[node name="ScoreLabel" type="Label" parent="Margin/TopLeft"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0"
+
+[node name="ComboLabel" type="Label" parent="Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "10
+COMBO"
+horizontal_alignment = 1
+
+[node name="BottomCenter" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="StaminaBar" type="ProgressBar" parent="Margin/BottomCenter"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+max_value = 110.0
+value = 50.0
+show_percentage = false

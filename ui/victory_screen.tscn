@@ -1,0 +1,96 @@
+[gd_scene load_steps=2 format=3 uid="uid://victory123"]
+
+[ext_resource type="Script" path="res://ui/victory_screen.gd" id="1_script"]
+
+[node name="VictoryScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Header" type="Label" parent="CenterContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "VICTORY"
+horizontal_alignment = 1
+
+[node name="SongTitle" type="Label" parent="CenterContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Song Name"
+horizontal_alignment = 1
+
+[node name="GradeLabel" type="Label" parent="CenterContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_font_sizes/font_size = 120
+text = "S"
+horizontal_alignment = 1
+
+[node name="NewHighscore" type="Label" parent="CenterContainer/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "NEW HIGHSCORE!"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="CenterContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "10,000,000"
+horizontal_alignment = 1
+
+[node name="ComboLabel" type="Label" parent="CenterContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Max Combo: 0 / 0"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="CenterContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="RestartBtn" type="Button" parent="CenterContainer/VBox/HBox"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Restart"
+
+[node name="ContinueBtn" type="Button" parent="CenterContainer/VBox/HBox"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.4, 1)
+text = "Continue"
+
+[connection signal="pressed" from="CenterContainer/VBox/HBox/RestartBtn" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CenterContainer/VBox/HBox/ContinueBtn" to="." method="_on_continue_pressed"]

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://dqj5vpvrywrtu"]
+
+[ext_resource type="Script" uid="uid://bucprh024ng7p" path="res://ui/pause_menu.gd" id="1_script"]
+
+[node name="PauseMenu" type="Control" unique_id=2138745227]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Panel" type="Panel" parent="." unique_id=1227720430]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=140120588]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Header" type="Label" parent="Panel/VBox" unique_id=571589876]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="SongCover" type="TextureRect" parent="Panel/VBox" unique_id=1275997708]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SongTitle" type="Label" parent="Panel/VBox" unique_id=1907418886]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Song Name"
+horizontal_alignment = 1
+
+[node name="SongDiff" type="Label" parent="Panel/VBox" unique_id=1341793650]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "Difficulty"
+horizontal_alignment = 1
+
+[node name="HBoxButtons" type="HBoxContainer" parent="Panel/VBox" unique_id=630199532]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="QuitBtn" type="Button" parent="Panel/VBox/HBoxButtons" unique_id=733970337]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+text = "Quit"
+
+[node name="RestartBtn" type="Button" parent="Panel/VBox/HBoxButtons" unique_id=83340431]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+text = "Restart"
+
+[node name="ResumeBtn" type="Button" parent="Panel/VBox/HBoxButtons" unique_id=1872738368]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.4, 1)
+text = "Resume"
+
+[connection signal="pressed" from="Panel/VBox/HBoxButtons/QuitBtn" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBoxButtons/RestartBtn" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBoxButtons/ResumeBtn" to="." method="_on_resume_pressed"]
